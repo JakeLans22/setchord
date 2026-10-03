@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SetChord - Songs</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+    <div class="app">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <div class="logo">
+                SetChord
+            </div>
+
+
+            <nav class="navigation">
+
+                <a href="index.html" class="nav-link">
+                    Dashboard
+                </a>
+
+                <a href="songs.html" class="nav-link active">
+                    Songs
+                </a>
+
+                <a href="#" class="nav-link">
+                    Setlists
+                </a>
+
+                <a href="#" class="nav-link">
+                    Settings
+                </a>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+
+            <!-- PAGE HEADER -->
+            <header class="page-header">
+
+                <div>
+
+                    <h1>Songs</h1>
+
+                    <p>
+                        Manage your worship songs and chord charts.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="add-song-button"
+                    id="addSongButton"
+                >
+                    + Add Song
+                </button>
+
+            </header>
+
+
+            <!-- ADD SONG FORM -->
+            <section
+                class="add-song-form"
+                id="addSongForm"
+            >
+
+                <h2>Add New Song</h2>
+
+
+                <div class="form-group">
+
+                    <label for="songTitle">
+                        Song Title
+                    </label>
+
+                    <input
+                        type="text"
+                        id="songTitle"
+                        placeholder="e.g. Goodness of God"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="songArtist">
+                        Artist
+                    </label>
+
+                    <input
+                        type="text"
+                        id="songArtist"
+                        placeholder="e.g. Bethel Music"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                 <div class="form-group">
+
+    <label for="songKey">
+        Original Key
+    </label>
+
+    <input
+        type="text"
+        id="songKey"
+        value="C"
+        readonly
+    >
+
+    <small>
+        Original key will be detected automatically.
+    </small>
+
+</div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="songChart">
+                        Song Chart
+                    </label>
+
+                    <textarea
+                        id="songChart"
+                        rows="12"
+                        placeholder="[G]I love You Lord
+[C]Oh Your mercy never fails me
+[Em]All my days I've been held in Your hands
+[D]From the moment that I wake up"
+                    ></textarea>
+
+                    <small>
+                        Use brackets around chords, for example:
+                        [G], [C], [Em], [D]
+                    </small>
+
+                </div>
+
+
+               <div class="form-group">
+
+    <label for="songUrl">
+        Song Chart URL
+    </label>
+
+    <div class="url-import">
+
+        <input
+            type="url"
+            id="songUrl"
+            placeholder="https://example.com/song"
+        >
+
+        <button
+            type="button"
+            id="importSongButton"
+            class="cancel-button"
+        >
+            Import
+        </button>
+
+    </div>
+
+    <small>
+        Paste a song chart URL and click Import.
+    </small>
+
+</div>
+
+                <div class="form-buttons">
+
+                    <button
+                        type="button"
+                        id="cancelSongButton"
+                        class="cancel-button"
+                    >
+                        Cancel
+                    </button>
+
+
+                    <button
+                        type="button"
+                        id="saveSongButton"
+                        class="save-button"
+                    >
+                        Save Song
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- SEARCH -->
+            <section class="search-section">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search songs or artists..."
+                >
+
+            </section>
+
+
+            <!-- SONG LIST -->
+            <section
+                class="song-list"
+                id="songList"
+            >
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script src="js/app.js"></script>
+
+</body>
+</html>

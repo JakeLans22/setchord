@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SetChord - Dashboard</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="app">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <div class="logo">
+                SetChord
+            </div>
+
+            <nav class="navigation">
+
+                <a href="index.html" class="nav-link active">
+                    Dashboard
+                </a>
+
+                <a href="songs.html" class="nav-link">
+                    Songs
+                </a>
+
+                <a href="#" class="nav-link">
+                    Setlists
+                </a>
+
+                <a href="#" class="nav-link">
+                    Settings
+                </a>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+
+            <header class="page-header">
+                <h1>Dashboard</h1>
+            </header>
+
+
+            <!-- WELCOME -->
+            <section class="welcome-section">
+
+                <h2>Welcome to SetChord</h2>
+
+                <p>
+                    Manage your worship songs, chords, and setlists
+                    in one place.
+                </p>
+
+            </section>
+
+
+            <!-- STATS -->
+            <section class="stats">
+
+                <div class="stat-card">
+
+                    <span class="stat-label">
+                        Songs
+                    </span>
+
+                    <strong class="stat-number" id="songCount">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <span class="stat-label">
+                        Setlists
+                    </span>
+
+                    <strong class="stat-number">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <span class="stat-label">
+                        Favorites
+                    </span>
+
+                    <strong class="stat-number">
+                        0
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+            <!-- RECENT SONGS -->
+            <section class="recent-section">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2>Recent Songs</h2>
+
+                        <p>
+                            Your recently added songs.
+                        </p>
+                    </div>
+
+                    <a href="songs.html" class="add-song-button">
+                        View Songs
+                    </a>
+
+                </div>
+
+
+                <div id="recentSongs" class="recent-songs">
+
+                    <p class="empty-message">
+                        No songs added yet.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script src="js/app.js"></script>
+
+</body>
+</html>
