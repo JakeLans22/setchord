@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Sign in · SetChord</title><link rel="stylesheet" href="css/style.css"></head>
+<body class="auth-page" data-page="login">
+  <main class="auth-card">
+    <a class="brand brand-centered" href="index.html"><span class="brand-mark">S</span><span>SetChord</span></a>
+    <p class="eyebrow">WELCOME BACK</p><h1>Sign in to your library</h1><p class="muted">Your charts and sets are waiting.</p>
+    <div class="notice" id="pageMessage" role="status" hidden></div>
+    <form id="loginForm" class="stack-form">
+      <label>Email<input name="email" type="email" autocomplete="email" required></label>
+      <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
+      <p class="auth-inline-link"><a href="forgot-password.html">Forgot password?</a></p>
+      <button class="button button-primary button-full" type="submit">Sign in</button>
+      <button class="button button-secondary button-full" id="resendConfirmationButton" type="button">Resend confirmation email</button>
+    </form>
+    <p class="auth-switch">New to SetChord? <a href="register.html">Create an account</a></p>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/supabase.js"></script><script src="js/app.js"></script>
+</body>
+</html>

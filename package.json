@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test:import": "node tests/import-song.smoke-test.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.57.4",
+    "cheerio": "1.0.0"
+  }
+}

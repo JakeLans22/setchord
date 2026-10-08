@@ -1,204 +1,47 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>SetChord - Song</title>
-
-    <link
-        rel="stylesheet"
-        href="css/style.css"
-    >
-
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b12"><title>Song · SetChord</title><link rel="stylesheet" href="css/style.css">
 </head>
-
-
-<body>
-
-    <div class="app">
-
-        <!-- SIDEBAR -->
-
-        <aside class="sidebar">
-
-            <div class="logo">
-                SetChord
-            </div>
-
-
-            <nav class="navigation">
-
-                <a
-                    href="index.html"
-                    class="nav-link"
-                >
-                    Dashboard
-                </a>
-
-
-                <a
-                    href="songs.html"
-                    class="nav-link active"
-                >
-                    Songs
-                </a>
-
-
-                <a
-                    href="#"
-                    class="nav-link"
-                >
-                    Setlists
-                </a>
-
-
-                <a
-                    href="#"
-                    class="nav-link"
-                >
-                    Settings
-                </a>
-
-            </nav>
-
-        </aside>
-
-
-        <!-- MAIN CONTENT -->
-
-        <main class="main-content">
-
-
-            <!-- BACK BUTTON -->
-
-            <div style="margin-bottom: 25px;">
-
-                <a
-                    href="songs.html"
-                    style="color: #71717a;"
-                >
-                    ← Back to Songs
-                </a>
-
-            </div>
-
-
-            <!-- SONG HEADER -->
-
-            <section
-                class="welcome-section"
-                id="songHeader"
-            >
-
-                <h1 id="viewerTitle">
-                    Song Title
-                </h1>
-
-
-                <p id="viewerArtist">
-                    Artist
-                </p>
-
-            </section>
-
-
-            <!-- KEY CONTROLS -->
-
-            <section
-                class="recent-section"
-                style="margin-bottom: 25px;"
-            >
-
-                <div
-                    style="
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                    "
-                >
-
-                    <div>
-
-                        <span
-                            style="
-                                color: #71717a;
-                                font-size: 14px;
-                            "
-                        >
-                            Current Key
-                        </span>
-
-
-                        <h2 id="currentKey">
-                            C
-                        </h2>
-
-                    </div>
-
-
-                    <div
-                        style="
-                            display: flex;
-                            gap: 10px;
-                        "
-                    >
-
-                        <button
-                            id="decreaseKey"
-                            class="cancel-button"
-                        >
-                            −
-                        </button>
-
-
-                        <button
-                            id="increaseKey"
-                            class="save-button"
-                        >
-                            +
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- SONG CHART -->
-
-            <section
-                class="recent-section"
-            >
-
-                <pre
-                    id="songChartViewer"
-                    style="
-                        white-space: pre-wrap;
-                        font-family: inherit;
-                        font-size: 18px;
-                        line-height: 2;
-                    "
-                ></pre>
-
-            </section>
-
-        </main>
-
-    </div>
-
-
-    <!-- MAIN JAVASCRIPT -->
-
-    <script src="js/app.js"></script>
-
+<body data-page="song" data-protected="true">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="index.html"><span class="brand-mark">S</span><span>SetChord</span></a>
+      <nav class="navigation" aria-label="Main navigation"><a class="nav-link" href="index.html">Dashboard</a><a class="nav-link active" href="songs.html">Songs</a><a class="nav-link" href="sets.html">Worship sets</a><a class="nav-link" href="add-song.html">Add a song</a></nav>
+      <div class="sidebar-user"><span class="avatar" id="userAvatar" aria-hidden="true">S</span><span class="user-name" id="userDisplayName">Your account</span><button class="text-button" id="logoutButton" type="button">Sign out</button></div>
+    </aside>
+    <main class="main-content performance-page">
+      <a class="back-link" href="songs.html">← Back to songs</a>
+      <div class="notice" id="pageMessage" role="status" hidden></div>
+      <header class="performance-header"><div><p class="eyebrow">PERFORMANCE MODE</p><h1 id="songTitle">Loading song…</h1><p class="muted" id="songArtist"></p></div><a class="button button-secondary" id="editSongLink" href="songs.html">Edit song</a></header>
+      <nav class="set-song-navigation" id="setSongNavigation" aria-label="Navigate songs in this set" hidden>
+        <a class="button button-secondary button-small" id="setSongBack" href="sets.html">← Back to set</a>
+        <span class="set-song-position" id="setSongPosition"></span>
+        <div class="set-song-navigation-actions">
+          <a class="button button-secondary button-small" id="previousSetSong" href="song.html">← Previous</a>
+          <a class="button button-primary button-small" id="nextSetSong" href="song.html">Next song →</a>
+        </div>
+      </nav>
+      <section class="key-panel" aria-label="Transpose song">
+        <div><span class="stat-label">Original key</span><strong id="originalKey" class="original-key">—</strong></div>
+        <div class="transpose-control"><button class="transpose-button" id="transposeDown" type="button" aria-label="Transpose down one semitone">−</button><div class="current-key"><span class="stat-label">Current key</span><strong id="currentKey">—</strong></div><button class="transpose-button" id="transposeUp" type="button" aria-label="Transpose up one semitone">+</button></div>
+        <button class="button button-secondary" id="resetKey" type="button">Reset key</button>
+      </section>
+      <nav class="song-section-navigation" id="songSectionNavigation" aria-label="Navigate song sections" hidden>
+        <div class="song-section-navigation-heading">
+          <span class="song-section-navigation-title">Song sections</span>
+          <button class="song-section-toggle" id="songSectionToggle" type="button" aria-expanded="true" aria-controls="songSectionLinks">Hide sections</button>
+        </div>
+        <div class="song-section-links" id="songSectionLinks"></div>
+      </nav>
+      <section class="chart-card"><div id="songChart" class="rendered-chart" aria-live="polite"><p class="empty-state">Loading chart…</p></div></section>
+      <p class="source-link" id="songSource"></p>
+      <nav class="set-song-bottom-navigation" id="setSongBottomNavigation" aria-label="Continue to the next song in this set" hidden>
+        <a class="button button-primary" id="nextSetSongBottom" href="song.html">Next song →</a>
+      </nav>
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/supabase.js"></script><script src="js/app.js"></script>
 </body>
-
 </html>

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Create a worship set · SetChord</title><link rel="stylesheet" href="css/style.css"></head>
+<body data-page="create-set" data-protected="true">
+  <div class="app-shell">
+    <aside class="sidebar"><a class="brand" href="index.html"><span class="brand-mark">S</span><span>SetChord</span></a><nav class="navigation" aria-label="Main navigation"><a class="nav-link" href="index.html">Dashboard</a><a class="nav-link" href="songs.html">Songs</a><a class="nav-link active" href="sets.html">Worship sets</a><a class="nav-link" href="add-song.html">Add a song</a></nav><div class="sidebar-user"><span class="avatar" id="userAvatar" aria-hidden="true">S</span><span class="user-name" id="userDisplayName">Your account</span><button class="text-button" id="logoutButton" type="button">Sign out</button></div></aside>
+    <main class="main-content"><a class="back-link" href="sets.html">← Back to worship sets</a><header class="page-header"><div><p class="eyebrow">PLAN YOUR SERVICE</p><h1 id="setFormHeading">Create a worship set</h1></div></header><div class="notice" id="pageMessage" role="status" hidden></div>
+      <form id="setForm" class="panel stack-form set-form">
+        <label>Set name<input id="setName" name="name" maxlength="160" required placeholder="Sunday Worship"></label>
+        <label>Description<textarea id="setDescription" name="description" rows="4" maxlength="2000" placeholder="Morning worship service"></textarea></label>
+        <fieldset class="musician-fieldset">
+          <legend>Musician schedule <span class="muted">(optional)</span></legend>
+          <p class="muted">Assign a musician to each position. Leave a position blank if it is unassigned.</p>
+          <div class="musician-form-grid">
+            <label>Bass Guitar<input name="musician-bass-guitar" maxlength="160" autocomplete="off" placeholder="Musician name"></label>
+            <label>Acoustic Guitar<input name="musician-acoustic-guitar" maxlength="160" autocomplete="off" placeholder="Musician name"></label>
+            <label>Lead Guitar<input name="musician-lead-guitar" maxlength="160" autocomplete="off" placeholder="Musician name"></label>
+            <label>Keyboard<input name="musician-keyboard" maxlength="160" autocomplete="off" placeholder="Musician name"></label>
+            <label>Drums<input name="musician-drums" maxlength="160" autocomplete="off" placeholder="Musician name"></label>
+          </div>
+        </fieldset>
+        <div class="form-actions"><a class="button button-secondary" href="sets.html">Cancel</a><button class="button button-primary" type="submit">Save set</button></div>
+      </form>
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/supabase.js"></script><script src="js/app.js"></script>
+</body>
+</html>

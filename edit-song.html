@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Edit song · SetChord</title><link rel="stylesheet" href="css/style.css"></head>
+<body data-page="edit-song" data-protected="true">
+  <div class="app-shell">
+    <aside class="sidebar"><a class="brand" href="index.html"><span class="brand-mark">S</span><span>SetChord</span></a><nav class="navigation" aria-label="Main navigation"><a class="nav-link" href="index.html">Dashboard</a><a class="nav-link active" href="songs.html">Songs</a><a class="nav-link" href="sets.html">Worship sets</a><a class="nav-link" href="add-song.html">Add a song</a></nav><div class="sidebar-user"><span class="avatar" id="userAvatar" aria-hidden="true">S</span><span class="user-name" id="userDisplayName">Your account</span><button class="text-button" id="logoutButton" type="button">Sign out</button></div></aside>
+    <main class="main-content">
+      <a class="back-link" href="songs.html">← Back to songs</a><header class="page-header"><div><p class="eyebrow">YOUR LIBRARY</p><h1>Edit song</h1></div></header>
+      <div class="notice" id="pageMessage" role="status" hidden></div>
+      <section class="editor-layout" id="songEditor">
+        <form id="songForm" class="panel song-form"><p class="eyebrow">SONG DETAILS</p>
+          <label>Song title<input id="editorTitle" name="title" maxlength="200" required></label>
+          <label>Artist<input id="editorArtist" name="artist" maxlength="200" required></label>
+          <label>Language<select id="editorLanguage" name="language"><option value="English">English</option><option value="Tagalog">Tagalog</option></select></label>
+          <label>Original key<select id="editorKey" name="original_key"><option value="">Not set</option></select></label>
+          <label>Source URL<input id="editorUrl" name="url" type="url" placeholder="https://…"></label>
+          <label>Chart<textarea id="editorChart" name="chart" rows="18" required spellcheck="false"></textarea></label>
+          <p class="field-hint">Chords use square brackets. Line breaks are preserved.</p>
+          <div class="form-actions"><a class="button button-secondary" href="songs.html">Cancel</a><button class="button button-primary" id="saveSongButton" type="submit">Save changes</button></div>
+        </form>
+        <aside class="panel live-preview-panel"><p class="eyebrow">LIVE PREVIEW</p><h2 id="previewTitle">Song title</h2><p class="muted" id="previewArtist">Artist</p><p class="preview-key">Original key <strong id="previewKey">Not set</strong></p><div id="previewChart" class="rendered-chart"><p class="empty-state">Loading chart…</p></div></aside>
+      </section>
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/supabase.js"></script><script src="js/app.js"></script>
+</body>
+</html>

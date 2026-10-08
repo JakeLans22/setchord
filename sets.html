@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Worship sets · SetChord</title><link rel="stylesheet" href="css/style.css"></head>
+<body data-page="sets" data-protected="true">
+  <div class="app-shell">
+    <aside class="sidebar"><a class="brand" href="index.html"><span class="brand-mark">S</span><span>SetChord</span></a><nav class="navigation" aria-label="Main navigation"><a class="nav-link" href="index.html">Dashboard</a><a class="nav-link" href="songs.html">Songs</a><a class="nav-link active" href="sets.html" aria-current="page">Worship sets</a><a class="nav-link" href="add-song.html">Add a song</a></nav><div class="sidebar-user"><span class="avatar" id="userAvatar" aria-hidden="true">S</span><span class="user-name" id="userDisplayName">Your account</span><button class="text-button" id="logoutButton" type="button">Sign out</button></div></aside>
+    <main class="main-content"><header class="page-header"><div><p class="eyebrow">PLAN TOGETHER</p><h1>My worship sets</h1><p class="muted">Arrange the songs for your next service.</p></div><a class="button button-primary" href="create-set.html">＋ Create set</a></header><div class="notice" id="pageMessage" role="status" hidden></div><section class="set-grid" id="setList" aria-live="polite"><p class="empty-state">Loading worship sets…</p></section></main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/supabase.js"></script><script src="js/app.js"></script>
+</body>
+</html>

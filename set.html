@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Worship set · SetChord</title><link rel="stylesheet" href="css/style.css"></head>
+<body data-page="set" data-protected="true">
+  <div class="app-shell">
+    <aside class="sidebar"><a class="brand" href="index.html"><span class="brand-mark">S</span><span>SetChord</span></a><nav class="navigation" aria-label="Main navigation"><a class="nav-link" href="index.html">Dashboard</a><a class="nav-link" href="songs.html">Songs</a><a class="nav-link active" href="sets.html">Worship sets</a><a class="nav-link" href="add-song.html">Add a song</a></nav><div class="sidebar-user"><span class="avatar" id="userAvatar" aria-hidden="true">S</span><span class="user-name" id="userDisplayName">Your account</span><button class="text-button" id="logoutButton" type="button">Sign out</button></div></aside>
+    <main class="main-content"><a class="back-link" href="sets.html">← Back to worship sets</a><header class="page-header"><div><p class="eyebrow">WORSHIP SET</p><h1 id="setTitle">Loading set…</h1><p class="muted" id="setDescription"></p></div><div class="header-actions"><a class="button button-secondary" id="editSetLink" href="create-set.html">Edit details</a><button class="button button-danger" id="deleteSetButton" type="button">Delete set</button></div></header>
+      <div class="notice" id="pageMessage" role="status" hidden></div>
+      <section class="panel musician-schedule-panel" aria-labelledby="musicianScheduleHeading">
+        <div class="section-heading"><div><h2 id="musicianScheduleHeading">Musician schedule</h2><p class="muted">Scheduled musicians for this worship set.</p></div><a class="button button-secondary button-small" id="editSetScheduleLink" href="create-set.html">Edit schedule</a></div>
+        <dl class="musician-schedule" id="setMusicianSchedule"><div class="empty-state">Loading schedule…</div></dl>
+      </section>
+      <section class="panel add-to-set"><div><h2>Add a song</h2><p class="muted">Search your library by song title or artist.</p></div><div class="set-song-search"><label class="sr-only" for="songSearchInput">Search songs by title or artist</label><input id="songSearchInput" type="search" placeholder="Search songs or artists…" autocomplete="off"><div id="songSearchResults" class="song-search-results" role="list" aria-live="polite"><p class="search-prompt">Type a song title or artist to search your library.</p></div></div></section>
+      <section class="content-section"><div class="section-heading"><div><h2>Song order</h2><p class="muted">Use the arrows to arrange your service.</p></div></div><ol class="set-song-list" id="setSongList" aria-live="polite"><li class="empty-state">Loading songs…</li></ol></section>
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/supabase.js"></script><script src="js/app.js"></script>
+</body>
+</html>

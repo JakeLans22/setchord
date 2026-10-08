@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Create account · SetChord</title><link rel="stylesheet" href="css/style.css"></head>
+<body class="auth-page" data-page="register">
+  <main class="auth-card">
+    <a class="brand brand-centered" href="index.html"><span class="brand-mark">S</span><span>SetChord</span></a>
+    <p class="eyebrow">START YOUR LIBRARY</p><h1>Create your account</h1><p class="muted">Keep your songs and sets in sync across devices.</p>
+    <div class="notice" id="pageMessage" role="status" hidden></div>
+    <form id="registerForm" class="stack-form">
+      <label>Display name<input name="displayName" type="text" maxlength="80" autocomplete="name" required></label>
+      <label>Email<input name="email" type="email" autocomplete="email" required></label>
+      <label>Password<input name="password" type="password" minlength="8" autocomplete="new-password" required></label>
+      <label>Confirm password<input name="confirmPassword" type="password" minlength="8" autocomplete="new-password" required></label>
+      <button class="button button-primary button-full" type="submit">Create account</button>
+    </form>
+    <p class="auth-switch">Already have an account? <a href="login.html">Sign in</a></p>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/supabase.js"></script><script src="js/app.js"></script>
+</body>
+</html>

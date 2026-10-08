@@ -1,244 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>SetChord - Songs</title>
-
-    <link rel="stylesheet" href="css/style.css">
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Songs · SetChord</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
-
-
-<body>
-
-    <div class="app">
-
-        <!-- SIDEBAR -->
-        <aside class="sidebar">
-
-            <div class="logo">
-                SetChord
-            </div>
-
-
-            <nav class="navigation">
-
-                <a href="index.html" class="nav-link">
-                    Dashboard
-                </a>
-
-                <a href="songs.html" class="nav-link active">
-                    Songs
-                </a>
-
-                <a href="#" class="nav-link">
-                    Setlists
-                </a>
-
-                <a href="#" class="nav-link">
-                    Settings
-                </a>
-
-            </nav>
-
-        </aside>
-
-
-        <!-- MAIN CONTENT -->
-        <main class="main-content">
-
-            <!-- PAGE HEADER -->
-            <header class="page-header">
-
-                <div>
-
-                    <h1>Songs</h1>
-
-                    <p>
-                        Manage your worship songs and chord charts.
-                    </p>
-
-                </div>
-
-
-                <button
-                    class="add-song-button"
-                    id="addSongButton"
-                >
-                    + Add Song
-                </button>
-
-            </header>
-
-
-            <!-- ADD SONG FORM -->
-            <section
-                class="add-song-form"
-                id="addSongForm"
-            >
-
-                <h2>Add New Song</h2>
-
-
-                <div class="form-group">
-
-                    <label for="songTitle">
-                        Song Title
-                    </label>
-
-                    <input
-                        type="text"
-                        id="songTitle"
-                        placeholder="e.g. Goodness of God"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="songArtist">
-                        Artist
-                    </label>
-
-                    <input
-                        type="text"
-                        id="songArtist"
-                        placeholder="e.g. Bethel Music"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                 <div class="form-group">
-
-    <label for="songKey">
-        Original Key
-    </label>
-
-    <input
-        type="text"
-        id="songKey"
-        value="C"
-        readonly
-    >
-
-    <small>
-        Original key will be detected automatically.
-    </small>
-
-</div>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="songChart">
-                        Song Chart
-                    </label>
-
-                    <textarea
-                        id="songChart"
-                        rows="12"
-                        placeholder="[G]I love You Lord
-[C]Oh Your mercy never fails me
-[Em]All my days I've been held in Your hands
-[D]From the moment that I wake up"
-                    ></textarea>
-
-                    <small>
-                        Use brackets around chords, for example:
-                        [G], [C], [Em], [D]
-                    </small>
-
-                </div>
-
-
-               <div class="form-group">
-
-    <label for="songUrl">
-        Song Chart URL
-    </label>
-
-    <div class="url-import">
-
-        <input
-            type="url"
-            id="songUrl"
-            placeholder="https://example.com/song"
-        >
-
-        <button
-            type="button"
-            id="importSongButton"
-            class="cancel-button"
-        >
-            Import
-        </button>
-
-    </div>
-
-    <small>
-        Paste a song chart URL and click Import.
-    </small>
-
-</div>
-
-                <div class="form-buttons">
-
-                    <button
-                        type="button"
-                        id="cancelSongButton"
-                        class="cancel-button"
-                    >
-                        Cancel
-                    </button>
-
-
-                    <button
-                        type="button"
-                        id="saveSongButton"
-                        class="save-button"
-                    >
-                        Save Song
-                    </button>
-
-                </div>
-
-            </section>
-
-
-            <!-- SEARCH -->
-            <section class="search-section">
-
-                <input
-                    type="text"
-                    id="searchInput"
-                    placeholder="Search songs or artists..."
-                >
-
-            </section>
-
-
-            <!-- SONG LIST -->
-            <section
-                class="song-list"
-                id="songList"
-            >
-            </section>
-
-        </main>
-
-    </div>
-
-
-    <script src="js/app.js"></script>
-
+<body data-page="songs" data-protected="true">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="index.html"><span class="brand-mark">S</span><span>SetChord</span></a>
+      <nav class="navigation" aria-label="Main navigation">
+        <a class="nav-link" href="index.html">Dashboard</a><a class="nav-link active" href="songs.html" aria-current="page">Songs</a>
+        <a class="nav-link" href="sets.html">Worship sets</a><a class="nav-link" href="add-song.html">Add a song</a>
+      </nav>
+      <div class="sidebar-user"><span class="avatar" id="userAvatar" aria-hidden="true">S</span><span class="user-name" id="userDisplayName">Your account</span><button class="text-button" id="logoutButton" type="button">Sign out</button></div>
+    </aside>
+    <main class="main-content">
+      <header class="page-header"><div><p class="eyebrow">YOUR LIBRARY</p><h1>My songs</h1><p class="muted">Your personal song charts, all in one place.</p></div><a class="button button-primary" href="add-song.html">＋ Add song</a></header>
+      <div class="notice" id="pageMessage" role="status" hidden></div>
+      <section class="toolbar">
+        <label class="search-field"><span class="sr-only">Search songs</span><span aria-hidden="true">⌕</span><input id="songSearch" type="search" placeholder="Search titles or artists…" autocomplete="off"></label>
+        <label class="language-filter">Language
+          <select id="songLanguageFilter" aria-label="Filter songs by language">
+            <option value="">All</option><option value="Tagalog">Tagalog</option><option value="English">English</option>
+          </select>
+        </label>
+        <span class="muted" id="songResultCount" aria-live="polite"></span>
+      </section>
+      <section class="song-grid" id="songList" aria-live="polite"><p class="empty-state">Loading songs…</p></section>
+      <nav class="pagination" id="songPagination" aria-label="Song list pages" hidden></nav>
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/supabase.js"></script><script src="js/app.js"></script>
 </body>
 </html>
