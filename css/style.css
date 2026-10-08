@@ -352,6 +352,7 @@ h2 { margin-bottom: 8px; font-size: 21px; letter-spacing: -.025em; }
 .set-card { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 20px; transition: border-color .16s ease, transform .16s ease; }
 .set-card .card-actions { width: 100%; margin-top: auto; padding-top: 5px; }
 .set-song-count { margin-top: 2px; }
+.set-service-date { margin: -5px 0 0; color: var(--primary-hover); font-size: 13px; font-weight: 650; }
 .set-card-musicians { width: 100%; padding-top: 2px; }
 .set-card-musicians > strong { font-size: 13px; }
 .set-card-musicians ul { display: grid; gap: 5px; margin: 8px 0 0; padding: 0; list-style: none; }

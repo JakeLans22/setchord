@@ -71,15 +71,16 @@ Run the import parsing smoke tests with `npm run test:import`.
 
 ## Worship sets
 
-Create a named set and optional description, schedule musicians for each position, open it, and add songs from your library. Assign a performance key per song in the set; opening that song from the set applies the saved key without changing the song's library key. Each song can be opened in performance mode, removed from the set without deleting the library song, or moved up/down. The dashboard's most-played count reflects each song's current placement in a worship set; it reuses `set_songs` rather than recording a separate play history. Set deletion asks for confirmation and leaves songs intact.
+Create a named set, choose an optional service date, add a description, schedule musicians for each position, open it, and add songs from your library. Assign a performance key per song in the set; opening that song from the set applies the saved key without changing the song's library key. Each song can be opened in performance mode, removed from the set without deleting the library song, or moved up/down. The dashboard's most-played count reflects each song's current placement in a worship set; it reuses `set_songs` rather than recording a separate play history. Set deletion asks for confirmation and leaves songs intact.
 
 For an existing Supabase project, add the per-set key column in the SQL Editor before using key assignments:
 
 ```sql
 alter table public.set_songs add column if not exists performance_key text;
+alter table public.worship_sets add column if not exists service_date date;
 ```
 
-Run the latest [`supabase/schema.sql`](supabase/schema.sql) in the SQL Editor to add the song language column and the per-set musician schedule table and policies. Existing songs default to English. The script is safe to rerun and preserves existing songs, sets, and song placements.
+Run the latest [`supabase/schema.sql`](supabase/schema.sql) in the SQL Editor to add the song language column, worship-set service dates, and the per-set musician schedule table and policies. Existing songs default to English, and existing sets have no service date until one is assigned. The script is safe to rerun and preserves existing songs, sets, and song placements.
 
 ## Deploy with GitHub and Vercel
 

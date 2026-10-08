@@ -54,9 +54,35 @@
             || /(?:column|field).*performance_key.*(?:does not exist|not found|schema cache)/i.test(error?.message || "");
     }
 
+    function isMissingServiceDateColumn(error) {
+        const message = error?.message || "";
+        return /service_date/i.test(message)
+            && (error?.code === "42703" || /does not exist|not found|schema cache/i.test(message));
+    }
+
+    function showServiceDateSchemaNotice() {
+        showMessage("To use service dates, run the latest supabase/schema.sql in your Supabase SQL Editor. It adds the optional service_date column to worship_sets.", "info");
+    }
+
+    function formatServiceDate(serviceDate) {
+        if (!serviceDate) return "";
+        const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(serviceDate);
+        if (!match) return "Date unavailable";
+        const [, year, month, day] = match;
+        const date = new Date(Date.UTC(Number(year), Number(month) - 1, Number(day)));
+        if (date.toISOString().slice(0, 10) !== serviceDate) return "Date unavailable";
+        return new Intl.DateTimeFormat(undefined, {
+            dateStyle: "full",
+            timeZone: "UTC"
+        }).format(date);
+    }
+
     function friendlyError(error) {
         const message = error && typeof error.message === "string" ? error.message : "";
         const code = error && typeof error.code === "string" ? error.code : "";
+        if (isMissingServiceDateColumn(error)) {
+            return "Service dates are not enabled in the database yet. Run the latest supabase/schema.sql in your Supabase SQL Editor, then try again.";
+        }
         if (/email.*rate limit|rate limit.*email/i.test(message) || /email.*rate.*limit/i.test(code)) {
             return "Supabase's built-in email service allows only 2 authentication emails per hour. Wait for the limit to reset, or configure custom SMTP in Supabase Dashboard → Authentication → SMTP Settings. If you already tried signing up, try signing in instead of creating the account again.";
         }
@@ -1070,18 +1096,37 @@
     }
 
     async function getSets() {
-        const { data, error } = await requireClient().from("worship_sets")
-            .select("id, name, description, created_at, updated_at, set_songs(count), set_musicians(position, musician)")
+        const client = requireClient();
+        const { data, error } = await client.from("worship_sets")
+            .select("id, name, description, service_date, created_at, updated_at, set_songs(count), set_musicians(position, musician)")
             .order("updated_at", { ascending: false });
+        if (isMissingServiceDateColumn(error)) {
+            showServiceDateSchemaNotice();
+            const fallback = await client.from("worship_sets")
+                .select("id, name, description, created_at, updated_at, set_songs(count), set_musicians(position, musician)")
+                .order("updated_at", { ascending: false });
+            if (fallback.error) throw fallback.error;
+            return fallback.data.map((set) => ({ ...set, service_date: null }));
+        }
         if (error) throw error;
         return data;
     }
 
     async function getSet(id) {
         validateUuid(id, "worship set");
-        const { data, error } = await requireClient().from("worship_sets")
-            .select("id, user_id, name, description, created_at, updated_at")
+        const client = requireClient();
+        const { data, error } = await client.from("worship_sets")
+            .select("id, user_id, name, description, service_date, created_at, updated_at")
             .eq("id", id).maybeSingle();
+        if (isMissingServiceDateColumn(error)) {
+            showServiceDateSchemaNotice();
+            const fallback = await client.from("worship_sets")
+                .select("id, user_id, name, description, created_at, updated_at")
+                .eq("id", id).maybeSingle();
+            if (fallback.error) throw fallback.error;
+            if (!fallback.data) throw new Error("Worship set not found, or you do not have access to it.");
+            return { ...fallback.data, service_date: null };
+        }
         if (error) throw error;
         if (!data) throw new Error("Worship set not found, or you do not have access to it.");
         return data;
@@ -1089,16 +1134,20 @@
 
     async function createSet(fields) {
         if (!currentUser) throw new Error("Please sign in to continue.");
+        const values = { ...fields, user_id: currentUser.id };
+        if (!values.service_date) delete values.service_date;
         const { data, error } = await requireClient().from("worship_sets")
-            .insert({ ...fields, user_id: currentUser.id }).select("id").single();
+            .insert(values).select("id").single();
         if (error) throw error;
         return data;
     }
 
     async function updateSet(id, fields) {
         validateUuid(id, "worship set");
+        const values = { ...fields };
+        if (!values.service_date) delete values.service_date;
         const { data, error } = await requireClient().from("worship_sets")
-            .update(fields).eq("id", id).select("id").maybeSingle();
+            .update(values).eq("id", id).select("id").maybeSingle();
         if (error) throw error;
         if (!data) throw new Error("Worship set not found, or you do not have permission to edit it.");
         return data;
@@ -1198,6 +1247,11 @@
                 const description = document.createElement("p");
                 description.className = "muted";
                 description.textContent = set.description || "No description";
+                const serviceDate = document.createElement("p");
+                serviceDate.className = "set-service-date";
+                serviceDate.textContent = set.service_date
+                    ? `Service date · ${formatServiceDate(set.service_date)}`
+                    : "Service date not set";
                 const count = document.createElement("span");
                 count.className = "set-song-count";
                 const songCount = set.set_songs?.[0]?.count || 0;
@@ -1254,7 +1308,7 @@
                     }
                 });
                 actions.append(open, edit, remove);
-                card.append(title, description, count, musicianSection, actions);
+                card.append(title, description, serviceDate, count, musicianSection, actions);
                 container.appendChild(card);
             });
         } catch (error) {
@@ -1274,6 +1328,7 @@
                 const musicians = await getSetMusicians(id);
                 clearMessage();
                 form.elements.name.value = set.name;
+                form.elements.service_date.value = set.service_date || "";
                 form.elements.description.value = set.description || "";
                 musicians.forEach(({ position, musician }) => {
                     const field = form.elements[`musician-${position.toLowerCase().replace(/ /g, "-")}`];
@@ -1294,6 +1349,7 @@
             try {
                 const fields = {
                     name: form.elements.name.value.trim(),
+                    service_date: form.elements.service_date.value || null,
                     description: form.elements.description.value.trim()
                 };
                 if (!fields.name) throw new Error("Enter a set name.");
@@ -1467,6 +1523,10 @@
             const set = await getSet(id);
             document.title = `${set.name} · Latreia`;
             document.getElementById("setTitle").textContent = set.name;
+            const serviceDate = document.getElementById("setServiceDate");
+            serviceDate.textContent = set.service_date
+                ? `Service date · ${formatServiceDate(set.service_date)}`
+                : "Service date not set";
             document.getElementById("setDescription").textContent = set.description || "";
             document.getElementById("editSetLink").href = `create-set.html?id=${encodeURIComponent(id)}`;
             document.getElementById("editSetScheduleLink").href = `create-set.html?id=${encodeURIComponent(id)}`;
@@ -1620,7 +1680,10 @@
                         ? "Date unavailable"
                         : new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(date);
                     const songCount = set.set_songs?.[0]?.count || 0;
-                    details.textContent = `${dateText} · ${songCount} ${songCount === 1 ? "song" : "songs"}`;
+                    const serviceDateText = set.service_date
+                        ? `Service date · ${formatServiceDate(set.service_date)}`
+                        : "Service date not set";
+                    details.textContent = `${serviceDateText} · Created ${dateText} · ${songCount} ${songCount === 1 ? "song" : "songs"}`;
                     item.append(heading, details);
                     const musicians = (set.set_musicians || []).filter((row) => row.musician);
                     const schedule = document.createElement("p");

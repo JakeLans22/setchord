@@ -65,6 +65,7 @@ create table if not exists public.worship_sets (
     user_id uuid not null references public.profiles (id) on delete cascade,
     name text not null check (length(trim(name)) between 1 and 160),
     description text not null default '',
+    service_date date,
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now()
 );
@@ -73,6 +74,7 @@ alter table public.worship_sets add column if not exists id uuid default gen_ran
 alter table public.worship_sets add column if not exists user_id uuid;
 alter table public.worship_sets add column if not exists name text;
 alter table public.worship_sets add column if not exists description text not null default '';
+alter table public.worship_sets add column if not exists service_date date;
 alter table public.worship_sets add column if not exists created_at timestamptz not null default now();
 alter table public.worship_sets add column if not exists updated_at timestamptz not null default now();
 
