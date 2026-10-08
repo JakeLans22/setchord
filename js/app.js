@@ -607,6 +607,16 @@
         const toggle = document.getElementById("songSectionToggle");
         let activeSectionId = "";
         let observer = null;
+        let navigationResizeObserver = null;
+
+        function updateSectionScrollMargins(sections) {
+            const styles = getComputedStyle(navigation);
+            const stickyTop = Number.parseFloat(styles.top) || 0;
+            const scrollMargin = Math.ceil(navigation.getBoundingClientRect().height + stickyTop + 16);
+            sections.forEach((section) => {
+                section.style.setProperty("--song-section-scroll-margin", `${scrollMargin}px`);
+            });
+        }
 
         function markActive(sectionId) {
             activeSectionId = sectionId;
@@ -623,6 +633,7 @@
             links.hidden = !links.hidden;
             toggle.setAttribute("aria-expanded", String(!links.hidden));
             toggle.textContent = links.hidden ? "Show sections" : "Hide sections";
+            updateSectionScrollMargins(Array.from(container.querySelectorAll(".chart-section-row[id]")));
         });
 
         links.addEventListener("click", (event) => {
@@ -658,6 +669,13 @@
                     .replace(/^\[|\]$/g, "");
                 links.appendChild(button);
             });
+            updateSectionScrollMargins(sections);
+            if (typeof ResizeObserver !== "undefined" && !navigationResizeObserver) {
+                navigationResizeObserver = new ResizeObserver(() => {
+                    updateSectionScrollMargins(Array.from(container.querySelectorAll(".chart-section-row[id]")));
+                });
+                navigationResizeObserver.observe(navigation);
+            }
             markActive(sections.some((section) => section.id === activeSectionId)
                 ? activeSectionId
                 : sections[0].id);
