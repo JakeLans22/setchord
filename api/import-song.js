@@ -75,14 +75,14 @@ module.exports = async function handler(req, res) {
         if (!chart) {
             return res.status(422).json({
                 success: false,
-                error: "SetChord found the page, but could not extract a song chart. The site may require sign-in or load its chart in the browser."
+                error: "Latreia found the page, but could not extract a song chart. The site may require sign-in or load its chart in the browser."
             });
         }
 
         if (!title && !artist) {
             return res.status(422).json({
                 success: false,
-                error: "SetChord extracted the chart but could not identify its title or artist. Try another chart page."
+                error: "Latreia extracted the chart but could not identify its title or artist. Try another chart page."
             });
         }
 
@@ -105,7 +105,7 @@ module.exports = async function handler(req, res) {
             return res.status(504).json({ success: false, error: "The song website took too long to respond." });
         }
         console.error("Song import failed:", error);
-        return res.status(502).json({ success: false, error: "SetChord could not connect to that website." });
+        return res.status(502).json({ success: false, error: "Latreia could not connect to that website." });
     }
 };
 
@@ -123,7 +123,7 @@ async function fetchPublicPage(initialUrl) {
             const request = requestModule.get(url, {
                 signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
                 headers: {
-                    "User-Agent": "SetChordSongImporter/1.0",
+                    "User-Agent": "LatreiaSongImporter/1.0",
                     Accept: "text/html,application/xhtml+xml"
                 },
                 lookup: (_hostname, options, callback) => {

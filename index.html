@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#080b12">
-  <title>Dashboard · SetChord</title>
+  <title>Dashboard · Latreia</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body data-page="dashboard" data-protected="true">
   <div class="app-shell">
     <aside class="sidebar">
-      <a class="brand" href="index.html"><span class="brand-mark">S</span><span>SetChord</span></a>
+      <a class="brand" href="index.html"><span class="brand-mark">[L]</span><span>atreia</span></a>
       <nav class="navigation" aria-label="Main navigation">
         <a class="nav-link active" href="index.html" aria-current="page">Dashboard</a>
         <a class="nav-link" href="songs.html">Songs</a>
@@ -18,27 +18,29 @@
         <a class="nav-link" href="add-song.html">Add a song</a>
       </nav>
       <div class="sidebar-user">
-        <span class="avatar" id="userAvatar" aria-hidden="true">S</span>
+        <span class="avatar" id="userAvatar" aria-hidden="true">L</span>
         <span class="user-name" id="userDisplayName">Your account</span>
         <button class="text-button" id="logoutButton" type="button">Sign out</button>
       </div>
     </aside>
-    <main class="main-content">
-      <header class="page-header">
-        <div><p class="eyebrow">YOUR MUSIC SPACE</p><h1>Your songs. Your key. Your set.</h1>
-          <p class="muted">Organize your charts and build worship sets from anywhere.</p></div>
-        <a class="button button-primary" href="add-song.html">＋ Add song</a>
+    <main class="main-content dashboard-page">
+      <header class="page-header dashboard-hero">
+        <div class="dashboard-hero-copy"><p class="eyebrow">YOUR MUSIC SPACE</p><h1>Your songs, in harmony.</h1>
+          <p>Every chart, every key, every set—ready when your team is.</p>
+          <div class="dashboard-hero-actions"><a class="button button-primary" href="add-song.html">＋ Add a song</a><a class="button button-secondary" href="create-set.html">Build a set →</a></div>
+        </div>
+        <div class="dashboard-hero-art" aria-hidden="true"></div>
       </header>
       <div class="notice" id="pageMessage" role="status" hidden></div>
       <section class="stats-grid" aria-label="Library overview">
         <button class="stat-card stat-trigger" id="songCountTrigger" type="button" aria-haspopup="dialog" aria-controls="dashboardModal">
-          <span class="stat-label">Total songs</span><strong class="stat-number" id="songCount">—</strong><span class="stat-hint">View total</span>
+          <span class="stat-card-top"><span class="stat-label">Total songs</span><span class="stat-icon" aria-hidden="true">♫</span></span><strong class="stat-number" id="songCount">—</strong><span class="stat-hint">In your chart library · View total</span>
         </button>
         <button class="stat-card stat-trigger" id="setCountTrigger" type="button" aria-haspopup="dialog" aria-controls="dashboardModal">
-          <span class="stat-label">Worship sets</span><strong class="stat-number" id="setCount">—</strong><span class="stat-hint">View your sets</span>
+          <span class="stat-card-top"><span class="stat-label">Worship sets</span><span class="stat-icon" aria-hidden="true">▤</span></span><strong class="stat-number" id="setCount">—</strong><span class="stat-hint">Plans for your team · View your sets</span>
         </button>
         <article class="stat-card most-played-card" aria-live="polite">
-          <span class="stat-label">Most played song</span><strong class="most-played-title" id="mostPlayedTitle">Loading…</strong>
+          <span class="stat-card-top"><span class="stat-label">Most played song</span><span class="stat-icon" aria-hidden="true">✦</span></span><strong class="most-played-title" id="mostPlayedTitle">Loading…</strong>
           <span class="stat-hint" id="mostPlayedCount"></span>
         </article>
       </section>

@@ -90,7 +90,7 @@
 
     async function checkAuth() {
         if (!db) {
-            showMessage("Connect SetChord to Supabase by setting the project URL and public publishable key in js/supabase.js.", "error");
+            showMessage("Connect Latreia to Supabase by setting the project URL and public publishable key in js/supabase.js.", "error");
             return false;
         }
 
@@ -123,7 +123,7 @@
                     element.textContent = displayName;
                 });
                 document.querySelectorAll("#userAvatar").forEach((element) => {
-                    element.textContent = displayName.trim().charAt(0).toUpperCase() || "S";
+                    element.textContent = displayName.trim().charAt(0).toUpperCase() || "L";
                 });
             }
         }
@@ -151,14 +151,14 @@
 
     function getAuthRedirectUrl() {
         if (!["http:", "https:"].includes(window.location.protocol)) {
-            throw new Error("Open SetChord from its Vercel URL before requesting an email confirmation.");
+            throw new Error("Open Latreia from its Vercel URL before requesting an email confirmation.");
         }
         return new URL("/index.html", window.location.origin).href;
     }
 
     function getPasswordResetRedirectUrl() {
         if (!["http:", "https:"].includes(window.location.protocol)) {
-            throw new Error("Open SetChord from its Vercel URL before requesting a password reset.");
+            throw new Error("Open Latreia from its Vercel URL before requesting a password reset.");
         }
         return new URL("/reset-password.html", window.location.origin).href;
     }
@@ -417,6 +417,16 @@
         return /^\s*\[?(?:Verse|Chorus|Pre[- ]?Chorus|Bridge|Intro|Outro|Interlude|Refrain|Hook|Ending|Break)(?:\s+\d+)?\]?:?\s*$/i.test(line);
     }
 
+    function getChartSectionKind(line) {
+        const name = line.trim().replace(/^\[|\]$/g, "").replace(/:$/, "").toLowerCase().replace(/[^a-z]/g, "");
+        if (name.startsWith("intro") || name.startsWith("interlude")) return "intro";
+        if (name.startsWith("verse")) return "verse";
+        if (name.startsWith("prechorus") || name.startsWith("refrain") || name.startsWith("hook")) return "lift";
+        if (name.startsWith("chorus")) return "chorus";
+        if (name.startsWith("bridge") || name.startsWith("break")) return "bridge";
+        return "outro";
+    }
+
     function renderChartPreview(chart, target) {
         target.dataset.chartSource = String(chart || "");
         target.replaceChildren();
@@ -450,6 +460,7 @@
             row.className = "chart-line";
             if (isChartSectionLine(line)) {
                 row.classList.add("chart-section-row");
+                row.dataset.sectionKind = getChartSectionKind(line);
                 if (target.id === "songChart") row.id = `song-section-${++sectionNumber}`;
                 const section = document.createElement("strong");
                 section.className = "chart-section-label";
@@ -642,6 +653,7 @@
                 button.className = "song-section-link";
                 button.type = "button";
                 button.dataset.sectionId = section.id;
+                button.dataset.sectionKind = section.dataset.sectionKind;
                 button.textContent = section.querySelector(".chart-section-label").textContent
                     .replace(/^\[|\]$/g, "");
                 links.appendChild(button);
@@ -996,7 +1008,7 @@
         }
         try {
             const song = await getSong(id);
-            document.title = `${song.title} · SetChord`;
+            document.title = `${song.title} · Latreia`;
             document.getElementById("songTitle").textContent = song.title;
             document.getElementById("songArtist").textContent = song.artist;
             document.getElementById("originalKey").textContent = song.original_key || "Not set";
@@ -1435,7 +1447,7 @@
         };
         try {
             const set = await getSet(id);
-            document.title = `${set.name} · SetChord`;
+            document.title = `${set.name} · Latreia`;
             document.getElementById("setTitle").textContent = set.name;
             document.getElementById("setDescription").textContent = set.description || "";
             document.getElementById("editSetLink").href = `create-set.html?id=${encodeURIComponent(id)}`;

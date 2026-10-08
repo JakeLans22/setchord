@@ -1,6 +1,6 @@
-# SetChord
+# Latreia
 
-SetChord is a responsive song-chart library and worship-set planner. It uses plain HTML, CSS, and JavaScript, Supabase Auth/PostgreSQL with Row Level Security, and a Vercel serverless function for URL-based chart import.
+Latreia is a responsive song-chart library and worship-set planner. It uses plain HTML, CSS, and JavaScript, Supabase Auth/PostgreSQL with Row Level Security, and a Vercel serverless function for URL-based chart import.
 
 ## Project structure
 
@@ -61,9 +61,9 @@ Use the local URL printed by Vercel CLI (usually `http://localhost:3000`). Runni
 
 ## Song library
 
-Use **Add a song** to either enter chart information manually or import a public song page. The importer checks embedded structured chart data (including Ultimate Guitar's page data), chart-specific HTML, and common chart containers; it normalizes chord markup to SetChord's `[G]lyrics` format and can detect unbracketed chord runs. A chart must be extracted before the importer offers the draft for review. Both paths show an editable form and live formatted chart preview. The importer only returns draft data. It never writes to Supabase. The final, edited title, artist, key, chart, and source URL are inserted only after **Save song** is pressed.
+Use **Add a song** to either enter chart information manually or import a public song page. The importer checks embedded structured chart data (including Ultimate Guitar's page data), chart-specific HTML, and common chart containers; it normalizes chord markup to Latreia's `[G]lyrics` format and can detect unbracketed chord runs. A chart must be extracted before the importer offers the draft for review. Both paths show an editable form and live formatted chart preview. The importer only returns draft data. It never writes to Supabase. The final, edited title, artist, key, chart, and source URL are inserted only after **Save song** is pressed.
 
-Songs may be searched by title or artist, filtered by English or Tagalog, and browsed ten at a time. Language is selected when adding or editing a song; existing songs default to English unless changed. Songs may also be viewed in a performance layout, edited without creating a duplicate, or deleted. The original key remains unchanged while the performance viewer transposes the displayed chart in semitone increments. Chord quality and slash-bass notes are preserved. Charts with recognized section headings show a sticky, collapsible section navigator in performance mode, with smooth jumps and a highlight for the section currently in view.
+Songs may be searched by title or artist, filtered by English or Tagalog, and browsed ten at a time. Language is selected when adding or editing a song; existing songs default to English unless changed. Songs may also be viewed in a performance layout, edited without creating a duplicate, or deleted. The original key remains unchanged while the performance viewer transposes the displayed chart in semitone increments. Chord quality and slash-bass notes are preserved. Charts with recognized section headings show a sticky, collapsible section navigator in performance mode, with smooth jumps and a highlight for the section currently in view. Section labels use distinct, theme-aware colors to make the chart easier to scan.
 
 External chart sites can block automated requests, require sign-in, or render their chart only in browser JavaScript. Those pages may not be importable. Import is bounded by a timeout and response-size limit and rejects local/private network addresses.
 
