@@ -1782,10 +1782,17 @@
 
         const button = document.createElement("button");
         button.type = "button";
-        button.className = "button button-secondary theme-toggle";
+        button.className = "button button-secondary theme-toggle theme-toggle-floating";
+        const icon = document.createElement("span");
+        icon.className = "theme-toggle-icon";
+        icon.setAttribute("aria-hidden", "true");
+        const label = document.createElement("span");
+        label.className = "theme-toggle-label";
+        button.append(icon, label);
         const updateButton = () => {
             const nextTheme = theme === "dark" ? "light" : "dark";
-            button.textContent = theme === "dark" ? "☼ Light mode" : "☾ Dark mode";
+            icon.textContent = theme === "dark" ? "☼" : "☾";
+            label.textContent = theme === "dark" ? "Light mode" : "Dark mode";
             button.setAttribute("aria-label", `Switch to ${nextTheme} mode`);
             button.setAttribute("aria-pressed", String(theme === "light"));
         };
@@ -1797,20 +1804,7 @@
             updateButton();
         });
 
-        const header = document.querySelector(".page-header, .performance-header");
-        if (header) {
-            let actions = header.querySelector(":scope > .header-actions");
-            if (!actions) {
-                actions = document.createElement("div");
-                actions.className = "header-actions";
-                Array.from(header.children).slice(1).forEach((child) => actions.appendChild(child));
-                header.appendChild(actions);
-            }
-            actions.appendChild(button);
-        } else {
-            button.classList.add("theme-toggle-floating");
-            document.querySelector(".auth-card")?.prepend(button);
-        }
+        document.body.appendChild(button);
     }
 
     function bindSharedEvents() {

@@ -10,7 +10,7 @@
 <body data-page="dashboard" data-protected="true">
   <div class="app-shell">
     <aside class="sidebar">
-      <a class="brand" href="index.html"><span class="brand-mark">[L]</span><span>atreia</span></a>
+      <a class="brand" href="index.html"><span class="brand-mark">[<span class="brand-initial">L</span>]</span><span>atreia</span></a>
       <nav class="navigation" aria-label="Main navigation">
         <a class="nav-link active" href="index.html" aria-current="page">Dashboard</a>
         <a class="nav-link" href="songs.html">Songs</a>
@@ -25,11 +25,12 @@
     </aside>
     <main class="main-content dashboard-page">
       <header class="page-header dashboard-hero">
-        <div class="dashboard-hero-copy"><p class="eyebrow">YOUR MUSIC SPACE</p><h1>Your songs, in harmony.</h1>
-          <p>Every chart, every key, every set—ready when your team is.</p>
+        <div class="dashboard-hero-copy"><p class="eyebrow">A HOME FOR WORSHIP SONGS</p><h1>Prepare the songs. Make room for worship.</h1>
+          <p>Keep your church’s charts, keys, and service sets together, ready for the next time you gather.</p>
+          <p class="dashboard-definition"><strong>Latreia (λατρεία)</strong><span>Greek for worship and devoted service.</span></p>
           <div class="dashboard-hero-actions"><a class="button button-primary" href="add-song.html">＋ Add a song</a><a class="button button-secondary" href="create-set.html">Build a set →</a></div>
         </div>
-        <div class="dashboard-hero-art" aria-hidden="true"></div>
+        <div class="dashboard-hero-art" aria-hidden="true"><span class="dashboard-brand-mark">[<span class="dashboard-brand-initial">L</span>]</span><span class="dashboard-brand-name">atreia</span></div>
       </header>
       <div class="notice" id="pageMessage" role="status" hidden></div>
       <section class="stats-grid" aria-label="Library overview">
@@ -40,7 +41,7 @@
           <span class="stat-card-top"><span class="stat-label">Worship sets</span><span class="stat-icon" aria-hidden="true">▤</span></span><strong class="stat-number" id="setCount">—</strong><span class="stat-hint">Plans for your team · View your sets</span>
         </button>
         <article class="stat-card most-played-card" aria-live="polite">
-          <span class="stat-card-top"><span class="stat-label">Most played song</span><span class="stat-icon" aria-hidden="true">✦</span></span><strong class="most-played-title" id="mostPlayedTitle">Loading…</strong>
+          <span class="stat-card-top"><span class="stat-label">Most played song</span><span class="stat-icon" aria-hidden="true">♪</span></span><strong class="most-played-title" id="mostPlayedTitle">Loading…</strong>
           <span class="stat-hint" id="mostPlayedCount"></span>
         </article>
       </section>

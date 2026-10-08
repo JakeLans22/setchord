@@ -1,6 +1,6 @@
 # Latreia
 
-Latreia is a responsive song-chart library and worship-set planner. It uses plain HTML, CSS, and JavaScript, Supabase Auth/PostgreSQL with Row Level Security, and a Vercel serverless function for URL-based chart import.
+Latreia is a responsive song-chart library and worship-set planner. Its name comes from the Greek *latreia* (λατρεία), meaning worship and devoted service. The interface uses a calm blue, white, charcoal, and grey palette to keep the focus on songs for worship. It uses plain HTML, CSS, and JavaScript, Supabase Auth/PostgreSQL with Row Level Security, and a Vercel serverless function for URL-based chart import.
 
 ## Project structure
 
