@@ -701,7 +701,8 @@
             });
             const navigableSections = sectionSlots
                 .map((slot) => ({ ...slot, section: availableSections.get(`${slot.kind}-${slot.occurrence}`) }))
-                .filter((slot) => slot.section);
+                .filter((slot) => slot.section)
+                .sort((first, second) => sections.indexOf(first.section) - sections.indexOf(second.section));
             links.replaceChildren();
             navigableSections.forEach(({ kind, label, section }) => {
                 const button = document.createElement("button");
