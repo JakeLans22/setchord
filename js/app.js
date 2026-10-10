@@ -631,9 +631,18 @@
         const navigation = document.getElementById("songSectionNavigation");
         const links = document.getElementById("songSectionLinks");
         const toggle = document.getElementById("songSectionToggle");
+        const nextSong = document.getElementById("nextSetSongFromChart");
         let activeSectionId = "";
         let observer = null;
         let navigationResizeObserver = null;
+        const sectionSlots = [
+            { kind: "verse", occurrence: 1, label: "Verse 1" },
+            { kind: "verse", occurrence: 2, label: "Verse 2" },
+            { kind: "chorus", occurrence: 1, label: "Chorus 1" },
+            { kind: "chorus", occurrence: 2, label: "Chorus 2" },
+            { kind: "bridge", occurrence: 1, label: "Bridge 1" },
+            { kind: "bridge", occurrence: 2, label: "Bridge 2" }
+        ];
 
         function updateSectionScrollMargins(sections) {
             const styles = getComputedStyle(navigation);
@@ -677,38 +686,49 @@
         songSectionNavigationRefreshers.set(container, () => {
             observer?.disconnect();
             const sections = Array.from(container.querySelectorAll(".chart-section-row[id]"));
-            links.replaceChildren();
-            if (!sections.length) {
-                navigation.hidden = true;
-                activeSectionId = "";
-                return;
-            }
-
-            navigation.hidden = false;
+            const sectionOccurrences = new Map();
+            const availableSections = new Map();
             sections.forEach((section) => {
+                const kind = section.dataset.sectionKind;
+                const occurrence = (sectionOccurrences.get(kind) || 0) + 1;
+                sectionOccurrences.set(kind, occurrence);
+                if (occurrence <= 2 && ["verse", "chorus", "bridge"].includes(kind)) {
+                    availableSections.set(`${kind}-${occurrence}`, section);
+                }
+            });
+            const navigableSections = sectionSlots
+                .map((slot) => ({ ...slot, section: availableSections.get(`${slot.kind}-${slot.occurrence}`) }))
+                .filter((slot) => slot.section);
+            links.replaceChildren();
+            navigableSections.forEach(({ kind, label, section }) => {
                 const button = document.createElement("button");
                 button.className = "song-section-link";
                 button.type = "button";
                 button.dataset.sectionId = section.id;
-                button.dataset.sectionKind = section.dataset.sectionKind;
-                button.textContent = section.querySelector(".chart-section-label").textContent
-                    .replace(/^\[|\]$/g, "");
+                button.dataset.sectionKind = kind;
+                button.textContent = label;
                 links.appendChild(button);
             });
+            toggle.hidden = navigableSections.length === 0;
             updateSectionScrollMargins(sections);
+            navigation.hidden = navigableSections.length === 0 && nextSong.hidden;
+            if (navigation.hidden) {
+                activeSectionId = "";
+                return;
+            }
             if (typeof ResizeObserver !== "undefined" && !navigationResizeObserver) {
                 navigationResizeObserver = new ResizeObserver(() => {
                     updateSectionScrollMargins(Array.from(container.querySelectorAll(".chart-section-row[id]")));
                 });
                 navigationResizeObserver.observe(navigation);
             }
-            markActive(sections.some((section) => section.id === activeSectionId)
+            markActive(navigableSections.some(({ section }) => section.id === activeSectionId)
                 ? activeSectionId
-                : sections[0].id);
+                : navigableSections[0]?.section.id || "");
 
             if (typeof IntersectionObserver !== "undefined") {
                 observer = new IntersectionObserver(() => {
-                    const visible = sections
+                    const visible = navigableSections.map(({ section }) => section)
                         .filter((section) => {
                             const bounds = section.getBoundingClientRect();
                             return bounds.top <= window.innerHeight * 0.3
@@ -717,7 +737,39 @@
                         .sort((first, second) => first.getBoundingClientRect().top - second.getBoundingClientRect().top);
                     if (visible.length) markActive(visible[0].id);
                 }, { rootMargin: "-10% 0px -70% 0px", threshold: 0 });
-                sections.forEach((section) => observer.observe(section));
+                navigableSections.forEach(({ section }) => observer.observe(section));
+            }
+        });
+    }
+
+    function initSongSidebar() {
+        const shell = document.getElementById("songAppShell");
+        const sidebar = document.getElementById("songSidebar");
+        const toggle = document.getElementById("sidebarToggle");
+        const backdrop = document.getElementById("sidebarBackdrop");
+        if (!shell || !sidebar || !toggle || !backdrop) return;
+
+        const setOpen = (open) => {
+            shell.classList.toggle("sidebar-open", open);
+            sidebar.inert = !open;
+            sidebar.setAttribute("aria-hidden", String(!open));
+            toggle.setAttribute("aria-expanded", String(open));
+            toggle.setAttribute("aria-label", open ? "Close sidebar" : "Open sidebar");
+            toggle.textContent = open ? "×" : "☰";
+            backdrop.hidden = !open;
+            if (!open) toggle.focus();
+        };
+
+        toggle.addEventListener("click", () => {
+            setOpen(toggle.getAttribute("aria-expanded") !== "true");
+        });
+        backdrop.addEventListener("click", () => setOpen(false));
+        sidebar.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", () => setOpen(false));
+        });
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape" && shell.classList.contains("sidebar-open")) {
+                setOpen(false);
             }
         });
     }
@@ -1017,13 +1069,14 @@
         const previous = document.getElementById("previousSetSong");
         const next = document.getElementById("nextSetSong");
         const nextBottom = document.getElementById("nextSetSongBottom");
+        const nextFromChart = document.getElementById("nextSetSongFromChart");
         const bottomNavigation = document.getElementById("setSongBottomNavigation");
 
         backLink.href = `set.html?id=${encodeURIComponent(setId)}`;
         backLink.textContent = `← ${set.name}`;
         position.textContent = `Song ${index + 1} of ${songs.length}`;
 
-        [[previous, songs[index - 1]], [next, songs[index + 1]], [nextBottom, songs[index + 1]]].forEach(([link, adjacent]) => {
+        [[previous, songs[index - 1]], [next, songs[index + 1]], [nextBottom, songs[index + 1]], [nextFromChart, songs[index + 1]]].forEach(([link, adjacent]) => {
             if (adjacent) {
                 link.href = makeSongUrl(adjacent.song.id);
                 link.removeAttribute("aria-disabled");
@@ -1034,6 +1087,7 @@
                 link.classList.add("is-disabled");
             }
         });
+        nextFromChart.hidden = !songs[index + 1];
         navigation.hidden = false;
         bottomNavigation.hidden = false;
         return songs[index].performance_key;
@@ -1910,6 +1964,7 @@
     async function initialize() {
         initThemeToggle();
         bindSharedEvents();
+        if (page === "song") initSongSidebar();
         const authenticated = await checkAuth();
         if (!authenticated) {
             if (page === "login" && db) initLogin();
