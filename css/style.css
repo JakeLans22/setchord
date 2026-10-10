@@ -435,20 +435,20 @@ input::placeholder, textarea::placeholder { color: var(--placeholder); }
 .chart-section-label { display: inline-block; padding: 2px 8px; border: 1px solid transparent; border-radius: 7px; font-weight: 700; }
 .chart-section-row[data-section-kind="intro"] { border-left-color: var(--section-intro); }
 .chart-section-row[data-section-kind="verse"] { border-left-color: var(--section-verse); }
-.chart-section-row[data-section-kind="lift"] { border-left-color: var(--section-lift); }
+.chart-section-row[data-section-kind="lift"], .chart-section-row[data-section-kind="prechorus"] { border-left-color: var(--section-lift); }
 .chart-section-row[data-section-kind="chorus"] { border-left-color: var(--section-chorus); }
 .chart-section-row[data-section-kind="bridge"] { border-left-color: var(--section-bridge); }
 .chart-section-row[data-section-kind="outro"] { border-left-color: var(--section-outro); }
 .chart-section-row[data-section-kind="intro"] .chart-section-label { border-color: var(--section-intro-soft); background: var(--section-intro-soft); color: var(--section-intro); }
 .chart-section-row[data-section-kind="verse"] .chart-section-label { border-color: var(--section-verse-soft); background: var(--section-verse-soft); color: var(--section-verse); }
-.chart-section-row[data-section-kind="lift"] .chart-section-label { border-color: var(--section-lift-soft); background: var(--section-lift-soft); color: var(--section-lift); }
+.chart-section-row[data-section-kind="lift"] .chart-section-label, .chart-section-row[data-section-kind="prechorus"] .chart-section-label { border-color: var(--section-lift-soft); background: var(--section-lift-soft); color: var(--section-lift); }
 .chart-section-row[data-section-kind="chorus"] .chart-section-label { border-color: var(--section-chorus-soft); background: var(--section-chorus-soft); color: var(--section-chorus); }
 .chart-section-row[data-section-kind="bridge"] .chart-section-label { border-color: var(--section-bridge-soft); background: var(--section-bridge-soft); color: var(--section-bridge); }
 .chart-section-row[data-section-kind="outro"] .chart-section-label { border-color: var(--section-outro-soft); background: var(--section-outro-soft); color: var(--section-outro); }
 .song-section-link[data-section-kind] { border-left: 3px solid var(--section-kind-color); color: var(--text); }
 .song-section-link[data-section-kind="intro"] { --section-kind-color: var(--section-intro); }
 .song-section-link[data-section-kind="verse"] { --section-kind-color: var(--section-verse); }
-.song-section-link[data-section-kind="lift"] { --section-kind-color: var(--section-lift); }
+.song-section-link[data-section-kind="lift"], .song-section-link[data-section-kind="prechorus"] { --section-kind-color: var(--section-lift); }
 .song-section-link[data-section-kind="chorus"] { --section-kind-color: var(--section-chorus); }
 .song-section-link[data-section-kind="bridge"] { --section-kind-color: var(--section-bridge); }
 .song-section-link[data-section-kind="outro"] { --section-kind-color: var(--section-outro); }

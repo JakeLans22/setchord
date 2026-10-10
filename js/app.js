@@ -447,7 +447,8 @@
         const name = line.trim().replace(/^\[|\]$/g, "").replace(/:$/, "").toLowerCase().replace(/[^a-z]/g, "");
         if (name.startsWith("intro") || name.startsWith("interlude")) return "intro";
         if (name.startsWith("verse")) return "verse";
-        if (name.startsWith("prechorus") || name.startsWith("refrain") || name.startsWith("hook")) return "lift";
+        if (name.startsWith("prechorus")) return "prechorus";
+        if (name.startsWith("refrain") || name.startsWith("hook")) return "lift";
         if (name.startsWith("chorus")) return "chorus";
         if (name.startsWith("bridge") || name.startsWith("break")) return "bridge";
         return "outro";
@@ -638,6 +639,8 @@
         const sectionSlots = [
             { kind: "verse", occurrence: 1, label: "Verse 1" },
             { kind: "verse", occurrence: 2, label: "Verse 2" },
+            { kind: "prechorus", occurrence: 1, label: "Pre-Chorus 1" },
+            { kind: "prechorus", occurrence: 2, label: "Pre-Chorus 2" },
             { kind: "chorus", occurrence: 1, label: "Chorus 1" },
             { kind: "chorus", occurrence: 2, label: "Chorus 2" },
             { kind: "bridge", occurrence: 1, label: "Bridge 1" },
@@ -692,7 +695,7 @@
                 const kind = section.dataset.sectionKind;
                 const occurrence = (sectionOccurrences.get(kind) || 0) + 1;
                 sectionOccurrences.set(kind, occurrence);
-                if (occurrence <= 2 && ["verse", "chorus", "bridge"].includes(kind)) {
+                if (occurrence <= 2 && ["verse", "prechorus", "chorus", "bridge"].includes(kind)) {
                     availableSections.set(`${kind}-${occurrence}`, section);
                 }
             });
