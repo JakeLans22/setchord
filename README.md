@@ -1,11 +1,11 @@
 # Latreia
 
-Latreia is a responsive song-chart library and worship-set planner. Its name comes from the Greek *latreia* (λατρεία), meaning worship and devoted service. The interface uses a calm blue, white, charcoal, and grey palette to keep the focus on songs for worship. It uses plain HTML, CSS, and JavaScript, Supabase Auth/PostgreSQL with Row Level Security, and a Vercel serverless function for URL-based chart import.
+Latreia is a responsive song-chart library and worship-set planner. Its name comes from the Greek *latreia* (λατρεία), meaning worship and devoted service. The interface uses a calm blue, white, charcoal, and grey palette to keep the focus on songs for worship. Its multi-page frontend is rendered by React and built with Vite; it uses Supabase Auth/PostgreSQL with Row Level Security and a Vercel serverless function for URL-based chart import.
 
 ## Project structure
 
 ```text
-index.html                 Authenticated dashboard
+index.html                 React-rendered authenticated dashboard
 login.html / register.html Supabase sign-in and account creation
 songs.html                 Search, view, edit, and delete songs
 add-song.html              Import preview and manual song editor
@@ -14,9 +14,12 @@ song.html                  Performance chart and transposition
 sets.html                  Worship set library
 create-set.html            Create or edit a worship set
 set.html                   View, edit, and reorder a set's songs
-css/style.css              Responsive dark theme
-js/supabase.js             Public Supabase client configuration
-js/app.js                  Auth, data operations, chart preview, and page UI
+src/main.jsx                React entry point for all pages
+vite.config.js              Multi-page Vite build configuration
+vercel.json                 Vercel build and output settings
+css/style.css               Responsive dark theme
+js/supabase.js              Public Supabase client configuration
+js/app.js                   Auth, data operations, chart preview, and page behavior
 api/import-song.js         Vercel URL importer (Cheerio)
 supabase/schema.sql        Complete database schema, trigger, indexes, and RLS
 ```
@@ -40,16 +43,22 @@ The profile trigger creates the `profiles` record on registration, using the dis
 
 ### Public client configuration and environment variables
 
-This static frontend has no build step, so Vercel does not need Supabase environment variables. Set the **public** project URL and publishable/anon key in `js/supabase.js`, then commit that client configuration with the site. A Supabase publishable/anon key is designed to be visible in a browser; RLS is the security boundary. Do not put `SUPABASE_SERVICE_ROLE_KEY`, a database password, or another secret in `js/supabase.js`, HTML, or a public client-side environment variable.
+Set the **public** project URL and publishable/anon key in `js/supabase.js`, then commit that client configuration with the site. A Supabase publishable/anon key is designed to be visible in a browser; RLS is the security boundary. Do not put `SUPABASE_SERVICE_ROLE_KEY`, a database password, or another secret in `js/supabase.js`, HTML, or a public client-side environment variable.
 
 ## Install and run locally
 
 ```powershell
 npm install
+npm run dev
+```
+
+Vite serves the React frontend locally. To test the URL-import serverless function as well, use Vercel's local development server:
+
+```powershell
 npx vercel dev
 ```
 
-Use the local URL printed by Vercel CLI (usually `http://localhost:3000`). Running the HTML directly with `file://` or serving only the static files through XAMPP does not provide `/api/import-song`, and browser authentication redirect URLs must also be configured in Supabase. Local Vercel development serves both the static pages and the importer.
+Use the local URL printed by Vite (usually `http://localhost:5173`) for frontend development. The Vercel development URL (usually `http://localhost:3000`) also serves `/api/import-song`. Browser authentication redirect URLs must be configured in Supabase for the local URL you use.
 
 ## Authentication and privacy
 
@@ -85,7 +94,7 @@ Run the latest [`supabase/schema.sql`](supabase/schema.sql) in the SQL Editor to
 ## Deploy with GitHub and Vercel
 
 1. Add the project to a GitHub repository. `node_modules`, `.env` files, and Vercel local files are ignored.
-2. In Vercel, import the GitHub repository. Vercel serves the root HTML files and discovers `api/import-song.js` as a serverless function.
+2. In Vercel, import the GitHub repository. `vercel.json` configures the Vite build output in `dist`; Vercel also discovers `api/import-song.js` as a serverless function.
 3. Keep the Supabase Project URL and public publishable/anon key in `js/supabase.js`; both are public client configuration, protected by RLS. Do not add a service-role key to Vercel frontend environment variables or commit one to Git.
 4. Deploy, then add the deployment URL to Supabase's Site URL and Redirect URLs.
 5. Smoke-test registration, confirmation (if enabled), password recovery, song create/edit/delete, set create/order/delete, and import preview before saving a song.

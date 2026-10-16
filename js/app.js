@@ -1994,5 +1994,5 @@
         }
     }
 
-    initialize().catch((error) => showMessage(friendlyError(error)));
+    window.initializeLatreia = () => initialize().catch((error) => showMessage(friendlyError(error)));
 })();
