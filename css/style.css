@@ -1002,3 +1002,178 @@ input:focus, select:focus, textarea:focus {
         transition-duration: .2s;
     }
 }
+
+body {
+    isolation: isolate;
+    background:
+        radial-gradient(ellipse at 68% 7%, rgb(33 81 129 / 20%), transparent 34rem),
+        radial-gradient(ellipse at 4% 92%, rgb(53 71 116 / 13%), transparent 35rem),
+        var(--background);
+}
+
+body::before {
+    position: fixed;
+    z-index: -1;
+    inset: 0;
+    background-image: radial-gradient(rgb(166 198 229 / 14%) .7px, transparent .7px);
+    background-size: 30px 30px;
+    content: "";
+    mask-image: linear-gradient(115deg, transparent 10%, #000 65%, transparent);
+    pointer-events: none;
+}
+
+.sidebar {
+    border-color: color-mix(in srgb, var(--border) 72%, transparent);
+    background: color-mix(in srgb, var(--sidebar-surface) 86%, transparent);
+    box-shadow: 14px 0 46px rgb(3 9 18 / 15%);
+    backdrop-filter: blur(24px) saturate(135%);
+}
+
+.brand { letter-spacing: -.055em; }
+
+.nav-link {
+    border-radius: 12px;
+    transition: background .2s ease, color .2s ease, border-color .2s ease, transform .2s ease;
+}
+
+.nav-link:hover { transform: translateX(2px); }
+
+.nav-link.active {
+    border-color: color-mix(in srgb, var(--primary) 36%, transparent);
+    background: linear-gradient(105deg, color-mix(in srgb, var(--primary) 20%, var(--surface)), color-mix(in srgb, var(--surface-light) 82%, transparent));
+    box-shadow: inset 3px 0 var(--primary-hover), 0 7px 22px rgb(4 13 25 / 15%);
+}
+
+.main-content { position: relative; }
+
+.page-header { align-items: flex-end; }
+
+.dashboard-hero {
+    min-height: 328px;
+    border-color: color-mix(in srgb, var(--primary-hover) 30%, var(--border));
+    background:
+        radial-gradient(ellipse at 79% 49%, color-mix(in srgb, var(--primary) 18%, transparent), transparent 34%),
+        linear-gradient(115deg, color-mix(in srgb, var(--surface) 96%, #080f1c) 0%, color-mix(in srgb, var(--surface) 92%, #14253a) 55%, color-mix(in srgb, var(--surface-light) 83%, #10243b) 100%);
+    box-shadow: 0 30px 90px rgb(0 0 0 / 25%), inset 0 1px rgb(255 255 255 / 5%);
+    backdrop-filter: blur(22px);
+}
+
+.dashboard-hero::before {
+    right: 7%;
+    width: clamp(230px, 30vw, 350px);
+    border-color: color-mix(in srgb, var(--primary-hover) 24%, transparent);
+    background:
+        radial-gradient(circle at 34% 30%, rgb(206 230 255 / 76%) 0 .6%, transparent 1.1%),
+        radial-gradient(circle at 69% 65%, rgb(133 197 255 / 52%) 0 .5%, transparent 1.2%),
+        radial-gradient(circle at 37% 33%, rgb(128 182 239 / 55%), transparent 35%),
+        radial-gradient(circle at 50% 50%, rgb(32 79 131 / 72%) 0 24%, transparent 24.5% 35%, rgb(124 173 224 / 19%) 35.5% 36%, transparent 36.5% 51%, rgb(124 173 224 / 13%) 51.5% 52%, transparent 52.5% 68%, rgb(124 173 224 / 11%) 68.5% 69%, transparent 69.5%),
+        radial-gradient(circle at 42% 38%, #284d75, #142a46 58%, #0c192a 76%);
+    box-shadow: 0 0 100px color-mix(in srgb, var(--primary) 26%, transparent), inset -18px -20px 38px rgb(2 8 16 / 54%), inset 8px 8px 28px rgb(187 218 255 / 12%);
+}
+
+.dashboard-hero::after {
+    right: calc(7% + clamp(230px, 30vw, 350px) / 2);
+    width: clamp(300px, 39vw, 445px);
+    height: clamp(96px, 12vw, 136px);
+    transform: translate(50%, -50%) rotate(-24deg);
+    border: 1px solid color-mix(in srgb, var(--primary-hover) 35%, transparent);
+    background: transparent;
+    box-shadow: 0 0 24px color-mix(in srgb, var(--primary) 15%, transparent), inset 0 0 20px color-mix(in srgb, var(--primary) 8%, transparent);
+}
+
+.dashboard-hero-copy { max-width: min(670px, 69%); }
+.dashboard-hero h1 { text-wrap: balance; }
+.dashboard-hero .eyebrow { color: color-mix(in srgb, var(--primary-hover) 84%, white); }
+
+.dashboard-hero .button-primary {
+    border-color: color-mix(in srgb, var(--primary-hover) 42%, transparent);
+    background: linear-gradient(135deg, var(--primary-hover), var(--primary));
+    box-shadow: 0 8px 26px color-mix(in srgb, var(--primary) 34%, transparent), inset 0 1px rgb(255 255 255 / 18%);
+}
+
+.dashboard-hero .button-secondary {
+    border-color: color-mix(in srgb, var(--border) 85%, white);
+    background: color-mix(in srgb, var(--surface-light) 55%, transparent);
+    backdrop-filter: blur(12px);
+}
+
+.stat-card, .panel, .chart-card, .song-card, .set-card, .action-card {
+    border-color: color-mix(in srgb, var(--border) 74%, transparent);
+    background: linear-gradient(145deg, color-mix(in srgb, var(--surface) 90%, white 3%), color-mix(in srgb, var(--surface) 82%, var(--surface-light)));
+    box-shadow: 0 16px 42px rgb(2 8 16 / 16%), inset 0 1px rgb(255 255 255 / 4%);
+    backdrop-filter: blur(18px) saturate(125%);
+}
+
+.dashboard-page .stat-card {
+    border-top-width: 1px;
+    background:
+        radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--primary) 10%, transparent), transparent 58%),
+        linear-gradient(145deg, color-mix(in srgb, var(--surface) 91%, white 3%), color-mix(in srgb, var(--surface) 80%, var(--surface-light)));
+    box-shadow: 0 18px 48px rgb(2 8 16 / 18%), inset 0 1px rgb(255 255 255 / 5%);
+}
+
+.dashboard-page .stat-card:hover,
+.song-card:hover,
+.set-card:hover,
+.action-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 54px rgb(2 8 16 / 22%), inset 0 1px rgb(255 255 255 / 7%);
+}
+
+.dashboard-page .stat-trigger:hover { border-color: color-mix(in srgb, var(--primary-hover) 55%, var(--border)); }
+
+.dashboard-page .stat-icon, .action-icon {
+    border: 1px solid color-mix(in srgb, var(--primary) 32%, var(--border));
+    background: linear-gradient(145deg, color-mix(in srgb, var(--primary) 23%, var(--surface)), color-mix(in srgb, var(--surface-light) 86%, transparent));
+    box-shadow: inset 0 1px rgb(255 255 255 / 8%);
+}
+
+.song-card, .set-card { background: linear-gradient(145deg, color-mix(in srgb, var(--surface) 91%, white 3%), color-mix(in srgb, var(--surface) 83%, var(--surface-light))); }
+
+.search-field, input, select, textarea {
+    border-color: color-mix(in srgb, var(--border) 82%, transparent);
+    background-color: color-mix(in srgb, var(--input-surface) 84%, transparent);
+    backdrop-filter: blur(12px);
+}
+
+.theme-toggle-floating {
+    border-color: color-mix(in srgb, var(--primary-hover) 32%, var(--border));
+    background: color-mix(in srgb, var(--surface) 72%, transparent);
+    box-shadow: 0 14px 38px rgb(2 8 16 / 24%), inset 0 1px rgb(255 255 255 / 7%);
+}
+
+.dashboard-modal {
+    border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+    background: color-mix(in srgb, var(--surface) 88%, transparent);
+    box-shadow: 0 32px 100px rgb(0 0 0 / 45%);
+    backdrop-filter: blur(28px) saturate(140%);
+}
+
+@media (max-width: 760px) {
+    .sidebar {
+        border-bottom-color: color-mix(in srgb, var(--border) 70%, transparent);
+        box-shadow: 0 12px 32px rgb(3 9 18 / 14%);
+        backdrop-filter: blur(24px) saturate(135%);
+    }
+
+    .dashboard-hero { min-height: 292px; }
+    .dashboard-hero-copy { max-width: 82%; }
+    .dashboard-hero::before { right: -48px; }
+    .dashboard-hero::after { right: 68px; width: 290px; }
+}
+
+@media (max-width: 480px) {
+    .dashboard-hero { min-height: 0; }
+    .dashboard-hero-copy { max-width: 100%; }
+    .dashboard-hero::before { right: -76px; opacity: .32; }
+    .dashboard-hero::after { display: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .dashboard-hero::before { animation: spatial-drift 24s ease-in-out infinite alternate; }
+
+    @keyframes spatial-drift {
+        from { transform: translateY(-50%) rotate(-3deg); }
+        to { transform: translateY(calc(-50% - 8px)) rotate(3deg); }
+    }
+}
